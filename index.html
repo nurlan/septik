@@ -5,12 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Septik by nurlan</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pygment_trac.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/kk-gcases.js"></script>
+    
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script>
+      function get_result() {
+        if(jQuery('#word').val().length > 0) {
+          jQuery('#div-word').removeClass('error');
+          jQuery('#div-word span').hide();
+
+          var result = all_septe(jQuery('#word').val());
+          
+          jQuery('#g-cases tbody tr').each(function(index) {
+            jQuery(this).find('td').eq(3).text(result[index]);
+          });
+        }
+        else {
+          jQuery('#div-word').addClass('error');
+          jQuery('#div-word span').show();
+        }
+      }
+    </script>
   </head>
   <body>
     <div class="wrapper">
@@ -28,6 +53,75 @@
         </ul>
       </header>
       <section>
+        <h3>Септік</h3>
+
+        <label class="control-label" for="word">Сөз:</label>
+        <div class="control-group" id="div-word">
+          <div class="controls">
+            <input type="text" placeholder="Сөзді теріңіз…" id="word">
+            <span class="help-inline" style="display: none;">Алдымен сөзді теріңіз…...</span>
+          </div>
+        </div>
+        <span class="help-block">Мысалы: Кітап</span>
+
+        <button class="btn" onclick="get_result()">Септе</button>
+
+        <h3>Септіктер</h3>
+        <table class="table table-striped" id="g-cases">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Атауы</th>
+              <th>Сұрағы</th>
+              <th>Сөзі</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Атау</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Ілік</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Барыс</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Табыс</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Жатыс</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Шығыс</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Көмектес</td>
+              <td></td>
+              <td></td>
+            </tr>
+          <tbody>
+        </table>
+
         <h3>Welcome to GitHub Pages.</h3>
 
 <p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
@@ -60,7 +154,7 @@ $ git checkout gh-pages
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+    <script src="js/scale.fix.js"></script>
     
   </body>
 </html>
