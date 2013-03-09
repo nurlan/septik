@@ -12,6 +12,12 @@ var voiced = ['б','в','г','ғ','д','ж','з','һ']; 								// Ұяң дау
 var resonant = ['й', 'л', 'м', 'н', 'ң', 'р', '0']; 							// Үнді дауыссыз дыбыстар
 var unvoiced = ['к', 'қ', 'п', 'с', 'т', 'ф', 'х', 'ч', 'ц', 'ш', 'щ']; 		// Қатаң дауыссыз дыбыстар
 
+var exceptedPronouns = new Array();
+exceptedPronouns['мен'] = ['мен','менің','маған','мені','менде','менен','менімен'];
+exceptedPronouns['сен'] = ['сен','сенің','саған','сені','сенде','сенен','сенімен'];
+exceptedPronouns['ол'] = ['ол','оның','оған','оны','онда','онан','онымен'];
+//exceptedPronouns['өз'] = ['ол','оның','оған','оны','онда','онан','онымен'];
+
 /*
  *[дауыссыз дыбыстар => [Ұяң,Үнді,Қатаң],
  * дауысты дыбыстар => [Жуан,Жіңішке]]
@@ -37,6 +43,10 @@ var gCases = [
 	[['дан','нан','тан'],['ден','нен','тен']],
 	[['бен','мен','пен'],['бен','мен','пен']]
 ];
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 function getYindex(word) {
 	var indexArray = new Array();
@@ -293,7 +303,10 @@ function defineLetterType(voicedInsteadResonant, letter) {
 function septe(caseIndex, org_word) {
 	var word = org_word.toLowerCase();
 	console.log(word);
-	if(word != undefined || word.length > 0) {
+	if(exceptedPronouns[word] != undefined || exceptedPronouns[word] == "") {
+		return exceptedPronouns[word][caseIndex].capitalize();
+	}
+	else if(word != undefined || word.length > 0) {
 		var syllableArray = divideBySyllables(yReplacement(word));
 		var lastSyllable = syllableArray[syllableArray.length-1];
 		var indexesArray = [(isSoftVowel(syllableArray)?1:0)];
@@ -313,7 +326,7 @@ function septe(caseIndex, org_word) {
 			ending = gCases[caseIndex][indexesArray[0]][0];
 		}
 			
-		return org_word+ending;
+		return (org_word+ending).capitalize();
 	}
 	return org_word;
 }
@@ -331,15 +344,16 @@ function all_septe(word) {
 
 function test() {
 	//console.log(divideBySyllables(yReplacement("өйткені")));
-	console.log(septe(3,"қой"))
-	console.log(septe(3,"қазақ"));
-	console.log(septe(3,"асау"));
-	console.log(septe(3,"ауа"));
-	console.log(septe(3,"асу"));
-	console.log(septe(3,"күту"));
-	console.log(septe(3,"ау"));
-	console.log(septe(3,"нұрлан"));
-	console.log(septe(3,"динара"));
-	console.log(septe(3,"данияр"));
-	console.log(septe(3,"жаз"));
+	console.log(septe(6,"қой"))
+	console.log(septe(6,"қазақ"));
+	console.log(septe(6,"асау"));
+	console.log(septe(6,"ауа"));
+	console.log(septe(6,"асу"));
+	console.log(septe(6,"күту"));
+	console.log(septe(6,"ау"));
+	console.log(septe(6,"нұрлан"));
+	console.log(septe(6,"динара"));
+	console.log(septe(6,"данияр"));
+	console.log(septe(6,"жаз"));
+	console.log(septe(6,"мен"));
 }
